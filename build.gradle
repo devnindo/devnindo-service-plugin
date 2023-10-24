@@ -10,36 +10,37 @@ group  "io.devnindo.plugin"
 version  '0.9.40'
 sourceCompatibility = JavaVersion.VERSION_17
 
-pluginBundle {
-    website = 'https://devnindo.io'
-    vcsUrl = 'https://github.com/devnindo/devnindo-service-plugin.git'
-    tags = ['data-helper', 'data-generator', 'devnindo']
-}
-
-gradlePlugin {
-  plugins {
-    devnindoPlugin {
-      id = "io.devnindo.devnindo-service-plugin"
-      implementationClass = "io.devnindo.serviceplugin.PluginMain"
-      displayName = 'Plugin for generating data class'
-      description = 'A plugin that generate io.devnindo.core:devnindo-datatype data class'
-    }
-  }
-}
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
-apply from: 'remote-repo.gradle'
 
 dependencies {
-    implementation 'com.thoughtworks.qdox:qdox:2.0.0'
-    implementation 'com.google.dagger:dagger:2.42'
-    implementation 'com.squareup:javapoet:1.11.1'
-    implementation('io.devnindo.core:service-common:0.9.1'){changing = true}
-    implementation('io.devnindo.core:type-common:0.9.5')
-    implementation 'org.junit.jupiter:junit-jupiter:5.9.0'
+    implementation 'com.thoughtworks.qdox:qdox:2.0.3'
+    implementation 'com.google.dagger:dagger:2.45'
+    implementation 'com.squareup:javapoet:1.12.1'
+    implementation('io.devnindo.core:service-common:0.9.8'){changing = true}
+   // api('io.devnindo.core:devnindo-datatype:0.9.8') {changing = true}
+    implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+}
+
+
+pluginBundle {
+    website = 'https://devnindo.io'
+    vcsUrl = 'https://github.com/devnindo/devnindo-service-plugin.git'
+    tags = [ 'service-helper', 'devnindo']
+}
+
+gradlePlugin {
+    plugins {
+        devnindoPlugin {
+            id = "io.devnindo.devnindo-service-plugin"
+            implementationClass = "io.devnindo.serviceplugin.PluginMain"
+            displayName = 'Devnindo Service Plugin'
+            description = 'Plugin for autowiring actions from all modules to ActionModule for deployment'
+        }
+    }
 }
 
 task publishPlugin(type: GradleBuild) {
@@ -77,4 +78,8 @@ test {
     events "passed", "skipped", "failed"
     showStandardStreams true
   }
+}
+
+repositories {
+    mavenCentral()
 }

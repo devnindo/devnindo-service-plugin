@@ -29,7 +29,7 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 
-public class TaskTestResCheck extends DefaultTask {
+public class TaskTestSettingCheck extends DefaultTask {
 
 
     @TaskAction

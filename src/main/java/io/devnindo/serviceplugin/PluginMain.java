@@ -34,7 +34,7 @@ public class PluginMain implements Plugin<Project> {
 
         });
 
-        Task testResourceCheck = project.getTasks().create("checkTestResource", TaskTestResCheck.class, (task$) ->
+        Task testResourceCheck = project.getTasks().create("checkTestResource", TaskTestSettingCheck.class, (task$) ->
         {
 
         });
