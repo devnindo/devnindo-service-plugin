@@ -1,3 +1,19 @@
+/*
+ * Copyright 2023 devnindo
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.devnindo.serviceplugin.parse;
 
 import com.thoughtworks.qdox.model.JavaClass;
@@ -75,11 +91,13 @@ public class ActionModuleGraph
         builder.append("Service Active Action, Validation and Auth provider Graph: ");
         moduleMetaMap.values().forEach(meta -> {
             String moduleInfo = String.format("module %s has %d actions and %d validation providers", meta.name, meta.actionCount, meta.vldProviderCount);
-            builder.append("\n  ")
+            builder.append("
+  ")
                     .append(moduleInfo);
         });
 
-        builder.append("\n  service auth provider: "+authProviderList.get(0).getFullyQualifiedName());
+        builder.append("
+  service auth provider: "+authProviderList.get(0).getFullyQualifiedName());
 
         return builder.toString();
     }

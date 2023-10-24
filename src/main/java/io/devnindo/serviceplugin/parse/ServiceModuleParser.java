@@ -1,3 +1,19 @@
+/*
+ * Copyright 2023 devnindo
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package io.devnindo.serviceplugin.parse;
 
 import com.thoughtworks.qdox.JavaProjectBuilder;
@@ -34,7 +50,7 @@ public class ServiceModuleParser
     }
     public ServiceModuleParser(String packageRoot$, Path srcPath$){
 
-         String[] pathParts = packageRoot$.split("\\.");
+         String[] pathParts = packageRoot$.split("\.");
          this.srcPath = Paths.get(srcPath$.toString(), pathParts);
          this.packageRoot = packageRoot$;
          this.qdoxBuilder = new JavaProjectBuilder();
@@ -79,7 +95,8 @@ public class ServiceModuleParser
                     else{
 
                         String msg = "Invalid package layout for action: "+clz.getFullyQualifiedName();
-                        msg += "\n  package format should be actions.$module_name.{command/query}";
+                        msg += "
+  package format should be actions.$module_name.{command/query}";
                         throw new IllegalStateException(msg);
                     }
                 } // peeking ends here
@@ -106,7 +123,8 @@ public class ServiceModuleParser
                 else{
 
                     String msg = "Invalid package layout for validation: "+clz.getFullyQualifiedName();
-                    msg += "\n  package format should be actions.$module_name.validation";
+                    msg += "
+  package format should be actions.$module_name.validation";
                     throw new IllegalStateException(msg);
                 }
             });
@@ -114,7 +132,8 @@ public class ServiceModuleParser
         for(ActionModuleGraph.ModuleMeta meta : moduleGraph$.moduleMetaMap.values()){
             if(meta.hasAction() && !meta.hasVldProvider()){
                 String msg = String.format("module %s contains %d actions but has no validation", meta.name, meta.actionCount);
-                msg += "\n  NOTE: validation providing clz must have @Module and @ActionValidation annotations";
+                msg += "
+  NOTE: validation providing clz must have @Module and @ActionValidation annotations";
                 throw new IllegalStateException(msg);
             }
         }
@@ -140,7 +159,8 @@ public class ServiceModuleParser
         // well then auth providing clz has invalid package layout
 
         String msg = "missing auth provider clz in: "+packageRoot+".deploy";
-        msg += "\n  auth providing clz must be annotated with @Module and @ActionAuth";
+        msg += "
+  auth providing clz must be annotated with @Module and @ActionAuth";
         throw new IllegalStateException(msg);
 
     }
@@ -152,7 +172,7 @@ public class ServiceModuleParser
             return Either.left(Violation.of("ACTION_PACKAGE_ROOT"));
         Integer prefixIdx = (packageRoot+".actions.").length();
         String modulePkg = actionPkgName$.substring(prefixIdx);
-        String[] splits = modulePkg.split("\\.");
+        String[] splits = modulePkg.split("\.");
         if(splits.length != 2)
             return Either.left(Violation.of("VALID_MODULE_HIERARCHY"));
 
