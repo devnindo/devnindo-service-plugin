@@ -1,0 +1,58 @@
+
+def PrivateRepo = {
+    name = 'private'
+    url = prvRepoURL
+    credentials {
+        username  prvUserName
+        password  prvPassword
+    }
+
+}
+
+pluginBundle {
+    website = 'https://devnindo.io'
+    vcsUrl = 'https://github.com/devnindo/devnindo-service-plugin.git'
+    tags = [ 'schema-generator', 'devnindo']
+}
+
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier.set('javadoc')
+    from javadoc.destinationDir
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://plugins.gradle.org/m2/" }
+    maven PrivateRepo
+}
+
+
+
+publishing {
+   publications {
+        ProjectPlugin(MavenPublication) {
+            from components.java
+
+            artifact(javadocJar) {
+                classifier = 'javadoc'
+            }
+        }
+    }
+
+    repositories {
+        maven  PrivateRepo
+    }
+}
+/*
+
+task publishPlugin(type: GradleBuild) {
+    tasks = [
+            'clean',
+            'test',
+            'build',
+            'generateMetadataFileForPluginMavenPublication',
+            'publishPluginMavenPublicationToMavenRepository',
+            'publish'
+    ]
+}*/
