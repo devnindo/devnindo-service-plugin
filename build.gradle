@@ -25,20 +25,18 @@ dependencies {
     implementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 }
 
-
-pluginBundle {
-    website = 'https://devnindo.io'
-    vcsUrl = 'https://github.com/devnindo/devnindo-service-plugin.git'
-    tags = [ 'service-helper', 'devnindo']
-}
-
 gradlePlugin {
     plugins {
-        devnindoPlugin {
+        website = 'https://devnindo.io'
+        vcsUrl = 'https://github.com/devnindo/devnindo-service-plugin.git'
+
+        servicePlugin {
             id = "io.devnindo.devnindo-service-plugin"
             implementationClass = "io.devnindo.serviceplugin.PluginMain"
             displayName = 'Devnindo Service Plugin'
             description = 'Plugin for autowiring actions from all modules to ActionModule for deployment'
+            tags.set([ 'service-helper', 'devnindo'])
+
         }
     }
 }
